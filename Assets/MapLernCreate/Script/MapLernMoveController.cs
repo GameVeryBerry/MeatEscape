@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-
-//using UnityEngine.SceneManagement;
 public class MapLernMoveController : MonoBehaviour
 {
     // 目標地点のオブジェクト
@@ -20,7 +18,6 @@ public class MapLernMoveController : MonoBehaviour
 
     void Update()
     {
-        //move_Position.z -= moveSpeed;
         float offset_x = toGoPoint.x - move_Position.x;
         float offset_z = toGoPoint.z - move_Position.z;
         float rad = Mathf.Atan2(offset_z, offset_x);
@@ -37,7 +34,6 @@ public class MapLernMoveController : MonoBehaviour
     {
         toGoPoint = goal.transform.position;   //目的地に設置したオブジェクトの座標
     }
-
 
 
     private void OnTriggerEnter(Collider other)
