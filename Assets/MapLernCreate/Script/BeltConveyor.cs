@@ -3,13 +3,13 @@
 public class BeltConveyor : MonoBehaviour
 {
     [SerializeField]
-    private Vector3 direction;
+    private Vector3 direction=new Vector3(0,0,0);
     [SerializeField]
-    private GameObject start;
+    private GameObject start=null;
     [SerializeField]
-    private GameObject goal;
+    private GameObject goal=null;
     [SerializeField]
-    private BeltMove belt;
+    private BeltMove belt=null;
 
     void Start()
     {
