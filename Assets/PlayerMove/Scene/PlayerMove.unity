@@ -468,7 +468,7 @@ PrefabInstance:
     - target: {fileID: 4691394200129680709, guid: f2a623f6cb2c9204c85c3cebac1a9a19,
         type: 3}
       propertyPath: m_Name
-      value: CameraWrapper (1)
+      value: 'CameraWrapper '
       objectReference: {fileID: 0}
     - target: {fileID: 4691394200129681083, guid: f2a623f6cb2c9204c85c3cebac1a9a19,
         type: 3}

@@ -21,12 +21,15 @@ public class PlayerController : MonoBehaviour
     public Transform _camera;
 
     private bool _isGround;
+    private bool _isContact;
+
     //ステート
-    public StateProcessor StateProcessor = new StateProcessor();           //プロセッサー
+    public StateProcessor StateProcessor = new StateProcessor();           
     public PlayerStateID PlayerStateID = new PlayerStateID();
     public Standing Stand = new Standing();
     public Running Run = new Running();
     public Jumping Jump = new Jumping();
+    public Cohere Cohere = new Cohere();
 
     // Use this for initialization
     void Start()
@@ -40,6 +43,7 @@ public class PlayerController : MonoBehaviour
         Stand._execDelegate = Standing;
         Run._execDelegate = Running;
         Jump._execDelegate = Jumping;
+        Cohere._execDelegate = Cohering;
         _isGround = false;
     }
 
@@ -53,7 +57,14 @@ public class PlayerController : MonoBehaviour
             return;
         }
         StateProcessor.Execute();
-   
+        if (Input.GetMouseButtonDown(0))
+        {
+            _rb.constraints = RigidbodyConstraints.FreezePositionY;
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            _rb.constraints = RigidbodyConstraints.None;
+        }
         _rb.AddForce(Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up) * _velocity, ForceMode.Impulse);
     }
 
@@ -99,6 +110,9 @@ public class PlayerController : MonoBehaviour
                 _velocity.y = JUMP_POWER;
                 StateProcessor.State = Jump;
             }
+
+           
+
         }
     }
 
@@ -133,6 +147,7 @@ public class PlayerController : MonoBehaviour
             StateProcessor.State = Jump;
         }
 
+       
     }
     public void Jumping()
     {
@@ -143,12 +158,18 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log("a");
+           
             _velocity = Vector3.zero;
             StateProcessor.State = Stand;
         }
+
+       
     }
 
+    public void Cohering()
+    {
+
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -157,6 +178,10 @@ public class PlayerController : MonoBehaviour
             _velocity.y = RESEET_SPEED;
             _isGround = true;
         }
+        else
+        {
+            _isContact = true;
+        }
     }
 
     private void OnCollisionExit(Collision collision)
@@ -164,6 +189,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             _isGround = false;
+        }
+        else
+        {
+            _isContact = false;
         }
     }
 
