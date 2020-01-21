@@ -59,13 +59,15 @@ public class PlayerController : MonoBehaviour
         StateProcessor.Execute();
         if (Input.GetMouseButtonDown(0))
         {
-            _rb.constraints = RigidbodyConstraints.FreezePositionY;
+            _rb.constraints =  RigidbodyConstraints.FreezeRotationY;
         }
         if (Input.GetMouseButtonDown(1))
         {
             _rb.constraints = RigidbodyConstraints.None;
         }
+
         _rb.AddForce(Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up) * _velocity, ForceMode.Impulse);
+        Physics.gravity = new Vector3(0, 9.81f, 0);
     }
 
     public void Default()
@@ -173,6 +175,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //collision.contacts[0].
         if (collision.gameObject.tag == "Ground")
         {
             _velocity.y = RESEET_SPEED;
@@ -181,6 +184,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             _isContact = true;
+
         }
     }
 
