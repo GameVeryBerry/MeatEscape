@@ -82,13 +82,6 @@ namespace PlyerState
         }
     }
 
-    public class Cohere : PlyerState
-    {
-        public override string GetStateName()
-        {
-            return "Cohere";
-        }
-    }
 }
 
 

@@ -21,20 +21,17 @@ public class PlayerController : MonoBehaviour
     public Transform _camera;
 
     private bool _isGround;
-    private bool _isContact;
-
     //ステート
-    public StateProcessor StateProcessor = new StateProcessor();           
+    public StateProcessor StateProcessor = new StateProcessor();           //プロセッサー
     public PlayerStateID PlayerStateID = new PlayerStateID();
     public Standing Stand = new Standing();
     public Running Run = new Running();
     public Jumping Jump = new Jumping();
-    public Cohere Cohere = new Cohere();
 
     // Use this for initialization
     void Start()
     {
-//        Physics.gravity = new Vector3(0, -9.81f, 0);
+        Physics.gravity = new Vector3(0, -9.81f, 0);
         _rb = GameObject.Find("Player").GetComponent<Rigidbody>();
         _camera = GameObject.Find("Main Camera").GetComponent<Transform>();
         //DefaultState
@@ -43,10 +40,7 @@ public class PlayerController : MonoBehaviour
         Stand._execDelegate = Standing;
         Run._execDelegate = Running;
         Jump._execDelegate = Jumping;
-        Cohere._execDelegate = Cohering;
         _isGround = false;
-
-        
     }
 
     // Update is called once per frame
@@ -59,17 +53,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
         StateProcessor.Execute();
-        if (Input.GetMouseButtonDown(0))
-        {
-            _rb.constraints =  RigidbodyConstraints.FreezeRotationY;
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            _rb.constraints = RigidbodyConstraints.None;
-        }
-
+   
         _rb.AddForce(Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up) * _velocity, ForceMode.Impulse);
-//        Physics.gravity = new Vector3(0, 9.81f, 0);
     }
 
     public void Default()
@@ -114,9 +99,6 @@ public class PlayerController : MonoBehaviour
                 _velocity.y = JUMP_POWER;
                 StateProcessor.State = Jump;
             }
-
-           
-
         }
     }
 
@@ -151,7 +133,6 @@ public class PlayerController : MonoBehaviour
             StateProcessor.State = Jump;
         }
 
-       
     }
     public void Jumping()
     {
@@ -162,31 +143,19 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-           
+            Debug.Log("a");
             _velocity = Vector3.zero;
             StateProcessor.State = Stand;
         }
-
-       
     }
 
-    public void Cohering()
-    {
-
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        //collision.contacts[0].
         if (collision.gameObject.tag == "Ground")
         {
             _velocity.y = RESEET_SPEED;
             _isGround = true;
-        }
-        else
-        {
-            _isContact = true;
-
         }
     }
 
@@ -195,10 +164,6 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             _isGround = false;
-        }
-        else
-        {
-            _isContact = false;
         }
     }
 
