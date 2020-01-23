@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Physics.gravity = new Vector3(0, -9.81f, 0);
+//        Physics.gravity = new Vector3(0, -9.81f, 0);
         _rb = GameObject.Find("Player").GetComponent<Rigidbody>();
         _camera = GameObject.Find("Main Camera").GetComponent<Transform>();
         //DefaultState
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         }
 
         _rb.AddForce(Quaternion.AngleAxis(_camera.transform.eulerAngles.y, Vector3.up) * _velocity, ForceMode.Impulse);
-        Physics.gravity = new Vector3(0, 9.81f, 0);
+//        Physics.gravity = new Vector3(0, 9.81f, 0);
     }
 
     public void Default()
