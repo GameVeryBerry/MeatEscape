@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
         Jump._execDelegate = Jumping;
         Cohere._execDelegate = Cohering;
         _isGround = false;
+
+        
     }
 
     // Update is called once per frame
